@@ -1,5 +1,6 @@
 public class linkedlist {
     private Nasabah head;
+<<<<<<< HEAD
     private Nasabah tail;
     
     public void bar(){
@@ -9,6 +10,9 @@ public class linkedlist {
         System.out.println("|                 Silahkan Antri Disini                 ");
         System.out.println("========================================================");
     }
+=======
+    private Nasabah tail; 
+>>>>>>> 6aa39f4c22a5688b65b65bd2358324d8b7fff2ef
 
     public void addLast(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
         Nasabah newNode = new Nasabah(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
@@ -22,6 +26,7 @@ public class linkedlist {
             tail = newNode;
         }
     }
+<<<<<<< HEAD
 
     public void displayQueue(){
         Nasabah current = head;
@@ -36,4 +41,6 @@ public class linkedlist {
             }
         }
     }
+=======
+>>>>>>> 6aa39f4c22a5688b65b65bd2358324d8b7fff2ef
 }
