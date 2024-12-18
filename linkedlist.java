@@ -1,7 +1,6 @@
-public class linkedlist {
-    private Nasabah head;
-<<<<<<< HEAD
-    private Nasabah tail;
+public class Linkedlist {
+    Node head;
+    Node tail;
     
     public void bar(){
         System.out.println("========================================================");
@@ -10,37 +9,131 @@ public class linkedlist {
         System.out.println("|                 Silahkan Antri Disini                 ");
         System.out.println("========================================================");
     }
-=======
-    private Nasabah tail; 
->>>>>>> 6aa39f4c22a5688b65b65bd2358324d8b7fff2ef
 
-    public void addLast(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
-        Nasabah newNode = new Nasabah(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+    public void tambahNode(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
+        Node newNode = new Node(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
 
         if (head == null) {
             head = newNode;
             tail = newNode;
-        } else { 
-            tail.right = newNode;
-            newNode.left = tail;
+        } else {
+            tail.next = newNode;
             tail = newNode;
         }
     }
-<<<<<<< HEAD
 
-    public void displayQueue(){
-        Nasabah current = head;
+    public void display(){
+        Node current = head;
         if (head == null) {
-            System.out.println("Mohon maaf antrian masih kosong");
+            System.out.println("Mohon maaf, data masih kosong!");
         } else {
-            System.out.println("|No.|  Nama  |  Layanan  |  Prioritas  |  Waktu Masuk  |");
-            System.out.println("--------------------------------------------------------");
+            System.out.println("| No. Antrian | Nama | Layanan | Prioritas | Tanggal | Waktu Masuk |");
+            System.out.println("---------------------------------------------------------");
             while (current != null) {
-                System.out.println("| " + current.nomorAntrian + " |  " + current.nama + "  |  " + current.layanan + "  |  " + current.prioritas + "  |  " + current.waktuMasuk + "  |");
-                System.out.println("--------------------------------------------------------");
+                System.out.println("| " + current.nomorAntrian + " | " + current.nama + " | " + current.layanan + " | " + current.prioritas + " | " + current.waktuMasuk + " |");
+                System.out.println("---------------------------------------------------------");
+                current = current.next;
             }
         }
     }
-=======
->>>>>>> 6aa39f4c22a5688b65b65bd2358324d8b7fff2ef
+
+    public Node searchByName(String name) {
+        Node current = head;
+        while (current != null) {
+            if (current.nama.equalsIgnoreCase(name)) {
+                return current;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
+    public void sortByPriority() {
+        Node current = head;
+        while (current != null) {
+            Node nextNode = current.next;
+            while (nextNode != null) {
+                if (current.nomorAntrian > nextNode.nomorAntrian) {
+                    int tempNomorAntrian = current.nomorAntrian;
+                    String tempNama = current.nama;
+                    String tempLayanan = current.layanan;
+                    int tempPrioritas = current.prioritas;
+                    String tempWaktuMasuk = current.waktuMasuk;
+
+                    current.nomorAntrian = nextNode.nomorAntrian;
+                    current.nama = nextNode.nama;
+                    current.layanan = nextNode.layanan;
+                    current.prioritas = nextNode.prioritas;
+                    current.waktuMasuk = nextNode.waktuMasuk;
+
+                    nextNode.nomorAntrian = tempNomorAntrian;
+                    nextNode.nama = tempNama;
+                    nextNode.layanan = tempLayanan;
+                    nextNode.prioritas = tempPrioritas;
+                    nextNode.waktuMasuk = tempWaktuMasuk;
+                }
+                nextNode = nextNode.next;
+            }
+            current = current.next;
+        }
+    }
+
+    public void sequentialSort() {
+        if (head == null) return;
+    
+        Node current = head;
+        while (current != null) {
+            Node minNode = current;
+            Node next = current.next;
+
+            while (next != null) {
+                if (next.tanggal < minNode.tanggal) {
+                    minNode = next;
+                }
+                next = next.next;
+            }
+
+            if (current != minNode) {
+                swapNodes(current, minNode);
+            }
+            current = current.next;
+        }
+    }
+
+    public void swapNodes(Node a, Node b) {
+        if (a == b) {
+            return;
+        }
+        
+        Node prevA = null, prevB = null;
+        Node current = head;
+    
+        while (current != null) {
+            if (current.next == a) {
+                prevA = current;
+            }
+            if (current.next == b) {
+                prevB = current;
+                current = current.next;
+            }
+        }
+    
+        if (a == head) {
+            head = b;
+        } else if (b == head) {
+            head = a;
+        }
+    
+        if (prevA != null) {
+            prevA.next = b;
+        }
+        if (prevB != null) {
+            prevB.next = a;
+        }
+  
+        Node temp = a.next;
+        a.next = b.next;
+        b.next = temp;
+    }
+
 }
