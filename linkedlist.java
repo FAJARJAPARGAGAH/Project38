@@ -1,4 +1,4 @@
-public class Linkedlist {
+public class linkedlist {
     Node head;
     Node tail;
     
@@ -76,5 +76,81 @@ public class Linkedlist {
             }
             current = current.next;
         }
+    }
+
+    public void displaySortedQueue() {
+        Node current = head;
+        System.out.println("Hasil Sorting Berdasarkan Prioritas:");
+        System.out.println("-------------------------------------------------------");
+        System.out.printf("%-15s %-10s %-20s %-10s\n", "Nomor Antrian", "Nama", "Layanan", "Prioritas");
+        System.out.println("-------------------------------------------------------");
+        while (current != null) {
+            System.out.printf("%-15d %-10s %-20s %-10d\n",
+                    current.nomorAntrian,
+                    current.nama,
+                    current.layanan,
+                    current.prioritas);
+            current = current.next;
+        }
+        System.out.println("-------------------------------------------------------");
+    }  
+
+    public void sequentialSort() {
+        if (head == null) return;
+    
+        Node current = head;
+        while (current != null) {
+            Node minNode = current;
+            Node next = current.next;
+    
+            while (next != null) {
+                if (next.tanggal < minNode.tanggal) {
+                    minNode = next;
+                }
+                next = next.next;
+            }
+    
+            if (current != minNode) {
+                swapNodes(current, minNode);
+            }
+            current = current.next;
+        }
+    }
+    
+    public void swapNodes(Node a, Node b) {
+        if (a == b) {
+            return;
+        }
+  
+        Node prevA = null, prevB = null;
+        Node current = head;
+    
+        while (current != null) {
+            if (current.next == a) {
+                prevA = current;
+            }
+            if (current.next == b) {
+                prevB = current;
+            }
+            current = current.next;
+        }
+    
+        if (a == head) {
+            head = b;
+        }
+        else if (b == head) {
+            head = a;
+        }
+        
+        if (prevA != null) {
+            prevA.next = b;
+        }
+        if (prevB != null) {
+            prevB.next = a;
+        }
+        
+        Node temp = a.next;
+        a.next = b.next;
+        b.next = temp;
     }
 }
