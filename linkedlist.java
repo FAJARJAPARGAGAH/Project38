@@ -77,4 +77,21 @@ public class Linkedlist {
             current = current.next;
         }
     }
+
+    public void displaySortedQueue() {
+        Node current = head;
+        System.out.println("Hasil Sorting Berdasarkan Prioritas:");
+        System.out.println("-------------------------------------------------------");
+        System.out.printf("%-15s %-10s %-20s %-10s\n", "Nomor Antrian", "Nama", "Layanan", "Prioritas");
+        System.out.println("-------------------------------------------------------");
+        while (current != null) {
+            System.out.printf("%-15d %-10s %-20s %-10d\n",
+                    current.nomorAntrian,
+                    current.nama,
+                    current.layanan,
+                    current.prioritas);
+            current = current.next;
+        }
+        System.out.println("-------------------------------------------------------");
+    }    
 }
