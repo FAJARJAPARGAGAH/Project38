@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -18,6 +17,7 @@ public class Main{
             System.out.println("2. Tampilkan Antrian");
             System.out.println("3. Cari Antrian Berdasarkan Nama");
             System.out.println("4. Urutkan Antrian Berdasarkan Prioritas");
+            System.out.println("5. Hapus Antrian");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             choice = scanner.nextInt();
@@ -66,7 +66,33 @@ public class Main{
                     System.out.println("Data berhasil diurutkan berdasarkan prioritas.");
                     linkedList.displaySortedQueue();
                     stack.push("Sort Antrian Berdasarkan Prioritas");
+                    System.out.print("\nApakah ingin mengeluarkan dari antrian? (y/n): ");
+                    String dequeueChoice = scanner.nextLine();
+                    if (dequeueChoice.equalsIgnoreCase("y")) {
+                        Node dequeuedNode = queue.dequeue();
+                        if (dequeuedNode != null) {
+                            System.out.println("Antrian dengan prioritas tertinggi telah dihapus:");
+                            System.out.println("Nomor Antrian: " + dequeuedNode.nomorAntrian);
+                            System.out.println("Nama: " + dequeuedNode.nama);
+                            stack.push("Dequeue - Nama: " + dequeuedNode.nama);
+                        } else {
+                            System.out.println("Antrian kosong, tidak ada yang dihapus.");
+                        }
+                    }
                     break;
+
+                case 5:
+                System.out.println("\n=========== History ===========");
+                stack.displayHistory();
+                System.out.println("\nIngin melakukan undo? (y/n): ");
+                String undoChoice = scanner.nextLine();
+                if (undoChoice.equalsIgnoreCase("y")) {
+                    String undoneAction = stack.undo();
+                    if (undoneAction != null) {
+                        System.out.println("Undo berhasil: " + undoneAction);
+                    }
+                }
+                break;
 
                 case 0:
                     System.out.println("Keluar dari program.");
