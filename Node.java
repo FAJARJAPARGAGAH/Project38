@@ -14,7 +14,6 @@ public class Node {
         this.layanan = layanan;
         this.prioritas = prioritas;
         this.waktuMasuk = waktuMasuk;
-        this.tanggal = tanggal;
         this.next = null;
         this.left = null;
         this.right = null;

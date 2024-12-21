@@ -104,7 +104,7 @@ public class linkedlist {
             Node next = current.next;
     
             while (next != null) {
-                if (next.tanggal < minNode.tanggal) {
+                if (next.waktuMasuk.compareTo(minNode.waktuMasuk) < 0) {
                     minNode = next;
                 }
                 next = next.next;
