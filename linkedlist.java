@@ -10,7 +10,7 @@ public class linkedlist {
         System.out.println("========================================================");
     }
 
-    public void tambahNode(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
+    public void tambahNode(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
         Node newNode = new Node(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
 
         if (head == null) {
@@ -53,11 +53,11 @@ public class linkedlist {
         while (current != null) {
             Node nextNode = current.next;
             while (nextNode != null) {
-                if (current.nomorAntrian > nextNode.nomorAntrian) {
+                if (current.prioritas.equalsIgnoreCase("Iya")) {
                     int tempNomorAntrian = current.nomorAntrian;
                     String tempNama = current.nama;
                     String tempLayanan = current.layanan;
-                    int tempPrioritas = current.prioritas;
+                    String tempPrioritas = current.prioritas;
                     String tempWaktuMasuk = current.waktuMasuk;
 
                     current.nomorAntrian = nextNode.nomorAntrian;
@@ -71,6 +71,25 @@ public class linkedlist {
                     nextNode.layanan = tempLayanan;
                     nextNode.prioritas = tempPrioritas;
                     nextNode.waktuMasuk = tempWaktuMasuk;
+                    if (current.nomorAntrian < current.next.nomorAntrian) {
+                        int temppNomorAntrian = current.nomorAntrian;
+                        String temppNama = current.nama;
+                        String temppLayanan = current.layanan;
+                        String temppPrioritas = current.prioritas;
+                        String temppWaktuMasuk = current.waktuMasuk;
+
+                        current.nomorAntrian = nextNode.nomorAntrian;
+                        current.nama = nextNode.nama;
+                        current.layanan = nextNode.layanan;
+                        current.prioritas = nextNode.prioritas;
+                        current.waktuMasuk = nextNode.waktuMasuk;
+
+                        nextNode.nomorAntrian = tempNomorAntrian;
+                        nextNode.nama = tempNama;
+                        nextNode.layanan = tempLayanan;
+                        nextNode.prioritas = tempPrioritas;
+                        nextNode.waktuMasuk = tempWaktuMasuk;
+                    }
                 }
                 nextNode = nextNode.next;
             }

@@ -33,7 +33,7 @@ public class Main{
                     System.out.print("Masukkan Layanan: ");
                     String layanan = scanner.nextLine();
                     System.out.print("Masukkan Prioritas: ");
-                    int prioritas = scanner.nextInt();
+                    String prioritas = scanner.nextLine();
                     scanner.nextLine();
                     String waktuMasuk = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd"));
                     linkedList.tambahNode(nomorAntrian, nama, layanan, prioritas, waktuMasuk);

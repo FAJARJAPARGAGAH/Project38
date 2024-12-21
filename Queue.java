@@ -2,7 +2,7 @@ public class Queue {
     Node front;
     Node rear;
 
-    public void enqueue(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
+    public void enqueue(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
         Node newNode = new Node(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
 
         if (rear == null) {

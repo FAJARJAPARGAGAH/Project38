@@ -2,11 +2,11 @@ public class Node {
     int nomorAntrian;
     String nama;
     String layanan;
-    int prioritas;
+    String prioritas;
     String waktuMasuk;
     Node next = null;
 
-    public Node(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
+    public Node(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
         this.nomorAntrian = nomorAntrian;
         this.nama = nama;
         this.layanan = layanan;
