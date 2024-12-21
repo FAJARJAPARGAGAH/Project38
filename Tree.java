@@ -1,5 +1,7 @@
 public class Tree {
-
+    Node right  = null;
+    Node left  = null;
+    
     public static class ServiceCategoryNode {
         String category;
         ServiceCategoryNode left;

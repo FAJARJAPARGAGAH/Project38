@@ -4,9 +4,7 @@ public class Node {
     String layanan;
     int prioritas;
     String waktuMasuk;
-    String tanggal;
-    Node next;
-    Node left, right;
+    Node next = null;
 
     public Node(int nomorAntrian, String nama, String layanan, int prioritas, String waktuMasuk) {
         this.nomorAntrian = nomorAntrian;
@@ -14,8 +12,5 @@ public class Node {
         this.layanan = layanan;
         this.prioritas = prioritas;
         this.waktuMasuk = waktuMasuk;
-        this.next = null;
-        this.left = null;
-        this.right = null;
     }
 }

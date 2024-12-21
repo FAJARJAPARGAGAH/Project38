@@ -1,6 +1,6 @@
 public class linkedlist {
-    Node head;
-    Node tail;
+    Node head = null;
+    Node tail = null;
     
     public void bar(){
         System.out.println("========================================================");
