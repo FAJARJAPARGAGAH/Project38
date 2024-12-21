@@ -12,17 +12,21 @@ public class linkedlist {
 
     public void tambahNode(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
         Node newNode = new Node(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
-
         if (head == null) {
             head = newNode;
             tail = newNode;
         } else {
-            tail.next = newNode;
-            tail = newNode;
+            if (prioritas.equalsIgnoreCase("Iya")) {
+                newNode.next = head;
+                head = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
     }
 
-    public void display(){
+    public void display() {
         Node current = head;
         if (head == null) {
             System.out.println("Mohon maaf, data masih kosong!");

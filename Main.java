@@ -2,15 +2,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
-    linkedlist linkedList = new linkedlist();
-    Queue queue = new Queue();
-    Stack stack = new Stack();
-    Tree tree = new Tree();
-    Scanner scanner = new Scanner(System.in);
+        linkedlist linkedList = new linkedlist();
+        Queue queue = new Queue();
+        Stack stack = new Stack();
+        Tree tree = new Tree(); // Membuat instance tree untuk pohon prioritas
+        Scanner scanner = new Scanner(System.in);
 
-    int choice;
+        int choice;
         do {
             System.out.println("\n=========== Menu ===========");
             System.out.println("1. Tambah Data Antrian");
@@ -32,11 +32,16 @@ public class Main{
                     String nama = scanner.nextLine();
                     System.out.print("Masukkan Layanan: ");
                     String layanan = scanner.nextLine();
-                    System.out.print("Masukkan Prioritas: ");
+                    System.out.print("Apakah Prioritas (Iya/Tidak): ");
                     String prioritas = scanner.nextLine();
-                    scanner.nextLine();
                     String waktuMasuk = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd"));
+                    
+                    // Menambahkan data ke linked list
                     linkedList.tambahNode(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+
+                    // Menambahkan data ke tree (pohon prioritas)
+                    tree.addCustomer(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+
                     stack.push("Tambah Antrian - Nama: " + nama);
                     System.out.println("Data berhasil ditambahkan.");
                     break;
@@ -62,16 +67,20 @@ public class Main{
                     break;
 
                 case 4:
-                    linkedList.sortByPriority();
-                    System.out.println("Data berhasil diurutkan berdasarkan prioritas.");
-                    linkedList.displaySortedQueue();
-                    stack.push("Sort Antrian Berdasarkan Prioritas");
+                    System.out.println("Menampilkan Antrian Berdasarkan Prioritas:");
+                    
+                    // Tampilkan antrian berdasarkan prioritas
+                    tree.displayByPriority();
+                    
+                    // Konfirmasi apakah pengguna ingin mengeluarkan nasabah dengan prioritas tertinggi
                     System.out.print("\nApakah ingin mengeluarkan dari antrian? (y/n): ");
                     String dequeueChoice = scanner.nextLine();
+                    
                     if (dequeueChoice.equalsIgnoreCase("y")) {
-                        Node dequeuedNode = queue.dequeue();
+                        // Menghapus nasabah dengan prioritas tertinggi
+                        PriorityTreeNode dequeuedNode = tree.removeHighestPriority();
                         if (dequeuedNode != null) {
-                            System.out.println("Antrian dengan prioritas tertinggi telah dihapus:");
+                            System.out.println("Nasabah dengan prioritas tertinggi telah dihapus:");
                             System.out.println("Nomor Antrian: " + dequeuedNode.nomorAntrian);
                             System.out.println("Nama: " + dequeuedNode.nama);
                             stack.push("Dequeue - Nama: " + dequeuedNode.nama);
@@ -82,17 +91,17 @@ public class Main{
                     break;
 
                 case 5:
-                System.out.println("\n=========== History ===========");
-                stack.displayHistory();
-                System.out.println("\nIngin melakukan undo? (y/n): ");
-                String undoChoice = scanner.nextLine();
-                if (undoChoice.equalsIgnoreCase("y")) {
-                    String undoneAction = stack.undo();
-                    if (undoneAction != null) {
-                        System.out.println("Undo berhasil: " + undoneAction);
+                    System.out.println("\n=========== History ===========");
+                    stack.displayHistory();
+                    System.out.println("\nIngin melakukan undo? (y/n): ");
+                    String undoChoice = scanner.nextLine();
+                    if (undoChoice.equalsIgnoreCase("y")) {
+                        String undoneAction = stack.undo();
+                        if (undoneAction != null) {
+                            System.out.println("Undo berhasil: " + undoneAction);
+                        }
                     }
-                }
-                break;
+                    break;
 
                 case 0:
                     System.out.println("Keluar dari program.");
@@ -103,6 +112,7 @@ public class Main{
             }
             
         } while (choice != 0);
-    scanner.close();
+        
+        scanner.close();
     }
 }

@@ -1,92 +1,61 @@
 public class Tree {
-    Node right  = null;
-    Node left  = null;
-    
-    public static class ServiceCategoryNode {
-        String category;
-        ServiceCategoryNode left;
-        ServiceCategoryNode right;
-
-        public ServiceCategoryNode(String category) {
-            this.category = category;
-            this.left = null;
-            this.right = null;
-        }
-    }
-
-    public static class PriorityNode {
-        String priority;
-        PriorityNode left;
-        PriorityNode right;
-
-        public PriorityNode(String priority) {
-            this.priority = priority;
-            this.left = null;
-            this.right = null;
-        }
-    }
-
-    private ServiceCategoryNode serviceRoot;
-    private PriorityNode priorityRoot;
+    private PriorityTreeNode root;
 
     public Tree() {
-        this.serviceRoot = null;
-        this.priorityRoot = null;
+        this.root = null;
     }
 
-    public void addServiceCategory(String category) {
-        serviceRoot = addServiceCategoryRec(serviceRoot, category);
+    public void addCustomer(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
+        root = addCustomerRec(root, nomorAntrian, nama, layanan, prioritas, waktuMasuk);
     }
 
-    private ServiceCategoryNode addServiceCategoryRec(ServiceCategoryNode root, String category) {
+    private PriorityTreeNode addCustomerRec(PriorityTreeNode node, int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
+        if (node == null) {
+            return new PriorityTreeNode(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+        }
+
+        // "Iya" memiliki prioritas lebih tinggi
+        if (prioritas.equalsIgnoreCase("Iya")) {
+            node.left = addCustomerRec(node.left, nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+        } else {
+            node.right = addCustomerRec(node.right, nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+        }
+
+        return node;
+    }
+
+    // Menampilkan antrian berdasarkan prioritas
+    public void displayByPriority() {
+        System.out.println("| No. Antrian | Nama | Layanan | Prioritas | Waktu Masuk |");
+        System.out.println("---------------------------------------------------------");
+        inorderTraversal(root);
+    }
+
+    private void inorderTraversal(PriorityTreeNode node) {
+        if (node != null) {
+            inorderTraversal(node.left);
+            System.out.println("| " + node.nomorAntrian + " | " + node.nama + " | " + node.layanan + " | " + node.prioritas + " | " + node.waktuMasuk + " |");
+            inorderTraversal(node.right);
+        }
+    }
+
+    // Menghapus nasabah dengan prioritas tertinggi (antrian depan)
+    public PriorityTreeNode removeHighestPriority() {
         if (root == null) {
-            return new ServiceCategoryNode(category);
+            return null;
         }
-        if (category.compareTo(root.category) < 0) {
-            root.left = addServiceCategoryRec(root.left, category);
-        } else if (category.compareTo(root.category) > 0) {
-            root.right = addServiceCategoryRec(root.right, category);
-        }
-        return root;
+        PriorityTreeNode[] result = removeHighestPriorityRec(root, null);
+        root = result[1]; // Update root tree
+        return result[0]; // Return node with highest priority
     }
 
-    public void addPriority(String priority) {
-        priorityRoot = addPriorityRec(priorityRoot, priority);
-    }
-
-    private PriorityNode addPriorityRec(PriorityNode root, String priority) {
-        if (root == null) {
-            return new PriorityNode(priority);
+    private PriorityTreeNode[] removeHighestPriorityRec(PriorityTreeNode node, PriorityTreeNode parent) {
+        if (node.left == null) {
+            if (parent != null) {
+                parent.left = node.right;
+            }
+            return new PriorityTreeNode[]{node, node.right};
         }
-        if (priority.compareTo(root.priority) < 0) {
-            root.left = addPriorityRec(root.left, priority);
-        } else if (priority.compareTo(root.priority) > 0) {
-            root.right = addPriorityRec(root.right, priority);
-        }
-        return root;
-    }
-
-    public void displayServiceCategories() {
-        inorderService(serviceRoot);
-    }
-
-    private void inorderService(ServiceCategoryNode root) {
-        if (root != null) {
-            inorderService(root.left);
-            System.out.println(root.category);
-            inorderService(root.right);
-        }
-    }
-
-    public void displayPriorities() {
-        inorderPriority(priorityRoot);
-    }
-
-    private void inorderPriority(PriorityNode root) {
-        if (root != null) {
-            inorderPriority(root.left);
-            System.out.println(root.priority);
-            inorderPriority(root.right);
-        }
+        return removeHighestPriorityRec(node.left, node);
     }
 }
