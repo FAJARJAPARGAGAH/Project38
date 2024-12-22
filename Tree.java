@@ -41,18 +41,22 @@ public class Tree {
         if (root == null) {
             return null;
         }
-        PriorityTreeNode[] result = removeHighestPriorityRec(root, null);
-        root = result[1]; 
-        return result[0]; 
+        if (root.left == null) {
+            PriorityTreeNode temp = root;
+            root = root.right;
+            return temp;
+        }
+        return removeHighestPriorityRec(root, null);
     }
 
-    private PriorityTreeNode[] removeHighestPriorityRec(PriorityTreeNode node, PriorityTreeNode parent) {
+    private PriorityTreeNode removeHighestPriorityRec(PriorityTreeNode node, PriorityTreeNode parent) {
         if (node.left == null) {
             if (parent != null) {
                 parent.left = node.right;
             }
-            return new PriorityTreeNode[]{node, node.right};
+            return node;
         }
         return removeHighestPriorityRec(node.left, node);
     }
 }
+
