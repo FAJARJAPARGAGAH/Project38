@@ -14,7 +14,6 @@ public class Tree {
             return new PriorityTreeNode(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
         }
 
-        // "Iya" memiliki prioritas lebih tinggi
         if (prioritas.equalsIgnoreCase("Iya")) {
             node.left = addCustomerRec(node.left, nomorAntrian, nama, layanan, prioritas, waktuMasuk);
         } else {
@@ -24,29 +23,27 @@ public class Tree {
         return node;
     }
 
-    // Menampilkan antrian berdasarkan prioritas
     public void displayByPriority() {
         System.out.println("| No. Antrian | Nama | Layanan | Prioritas | Waktu Masuk |");
         System.out.println("---------------------------------------------------------");
-        inorderTraversal(root);
+        preorderTraversal(root);
     }
 
-    private void inorderTraversal(PriorityTreeNode node) {
+    private void preorderTraversal(PriorityTreeNode node) {
         if (node != null) {
-            inorderTraversal(node.left);
             System.out.println("| " + node.nomorAntrian + " | " + node.nama + " | " + node.layanan + " | " + node.prioritas + " | " + node.waktuMasuk + " |");
-            inorderTraversal(node.right);
+            preorderTraversal(node.left);
+            preorderTraversal(node.right);
         }
     }
 
-    // Menghapus nasabah dengan prioritas tertinggi (antrian depan)
     public PriorityTreeNode removeHighestPriority() {
         if (root == null) {
             return null;
         }
         PriorityTreeNode[] result = removeHighestPriorityRec(root, null);
-        root = result[1]; // Update root tree
-        return result[0]; // Return node with highest priority
+        root = result[1]; 
+        return result[0]; 
     }
 
     private PriorityTreeNode[] removeHighestPriorityRec(PriorityTreeNode node, PriorityTreeNode parent) {

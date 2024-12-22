@@ -1,27 +1,28 @@
 public class linkedlist {
     Node head = null;
     Node tail = null;
-    
-    public void bar(){
-        System.out.println("========================================================");
-        System.out.println("|                           Qzy                         ");
-        System.out.println("--------------------------------------------------------");
-        System.out.println("|                 Silahkan Antri Disini                 ");
-        System.out.println("========================================================");
-    }
 
     public void tambahNode(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
         Node newNode = new Node(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
-        if (head == null) {
+    
+        if (head == null) { 
             head = newNode;
             tail = newNode;
         } else {
-            if (prioritas.equalsIgnoreCase("Iya")) {
+            if (nomorAntrian < head.nomorAntrian) { 
                 newNode.next = head;
                 head = newNode;
             } else {
-                tail.next = newNode;
-                tail = newNode;
+                Node current = head;
+                while (current.next != null && current.next.nomorAntrian < nomorAntrian) {
+                    current = current.next; 
+                }
+                newNode.next = current.next;
+                current.next = newNode;
+    
+                if (current == tail) { 
+                    tail = newNode;
+                }
             }
         }
     }
@@ -31,6 +32,7 @@ public class linkedlist {
         if (head == null) {
             System.out.println("Mohon maaf, data masih kosong!");
         } else {
+            System.out.println("========================================================");
             System.out.println("| No. Antrian | Nama | Layanan | Prioritas | Waktu Masuk |");
             System.out.println("---------------------------------------------------------");
             while (current != null) {
@@ -88,11 +90,11 @@ public class linkedlist {
                         current.prioritas = nextNode.prioritas;
                         current.waktuMasuk = nextNode.waktuMasuk;
 
-                        nextNode.nomorAntrian = tempNomorAntrian;
-                        nextNode.nama = tempNama;
-                        nextNode.layanan = tempLayanan;
-                        nextNode.prioritas = tempPrioritas;
-                        nextNode.waktuMasuk = tempWaktuMasuk;
+                        nextNode.nomorAntrian = temppNomorAntrian;
+                        nextNode.nama = temppNama;
+                        nextNode.layanan = temppLayanan;
+                        nextNode.prioritas = temppPrioritas;
+                        nextNode.waktuMasuk = temppWaktuMasuk;
                     }
                 }
                 nextNode = nextNode.next;
@@ -175,5 +177,32 @@ public class linkedlist {
         Node temp = a.next;
         a.next = b.next;
         b.next = temp;
+    }
+
+    public void enqueue(int nomorAntrian, String nama, String layanan, String prioritas, String waktuMasuk) {
+        Node newNode = new Node(nomorAntrian, nama, layanan, prioritas, waktuMasuk);
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+    }
+
+    public Node dequeue(Stack stack) {
+        if (head == null) {
+            return null;
+        } else {
+            Node temp = head;
+            head = head.next;
+            if (head == null) { 
+                tail = null;
+            }
+            stack.push("Hapus Antrian - Nama: " + temp.nama);
+            System.out.println("Data dengan nama " + temp.nama + " berhasil dihapus.");
+            return temp;
+        }
     }
 }

@@ -61,17 +61,6 @@ public class Stack {
         }
     }
 
-    public String undo() {
-        if (top == null) {
-            System.out.println("No actions to undo.");
-            return null;
-        } else {
-            String lastAction = pop();
-            System.out.println("Undone action: " + lastAction);
-            return lastAction;
-        }
-    }
-
     public void clearHistory() {
         top = null;
         System.out.println("History cleared.");
